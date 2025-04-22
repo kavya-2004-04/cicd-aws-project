@@ -1,0 +1,44 @@
+/* General styles for the page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    text-align: center;
+    padding: 50px;
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 36px;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #dff0d8;
+    margin: 10px auto;
+    padding: 10px;
+    width: 60%;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+/* You can also add a media query to make it responsive for mobile */
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+
+    li {
+        width: 80%;
+    }
+}

@@ -8,6 +8,7 @@ pipeline {
     stages {
         stage('Pull from GitHub') {
             steps {
+                // Pull the code from the GitHub repository
                 git url: 'https://github.com/kavya-2004-04/cicd-aws-project.git', branch: 'main'
             }
         }
@@ -35,16 +36,18 @@ pipeline {
                 echo 'Deploy step here (e.g., upload to S3 or copy to server)'
                 // Example for S3:
                 // sh 'aws s3 cp ./dist s3://cicd-pipeline33/ --recursive'
+                echo 'Deploying the project...'
+                // Example: sh 'aws s3 cp ./index.html s3://cicd-pipeline33/ --recursive'
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline executed successfully!'
+            echo 'Deployment successful!'
         }
         failure {
-            echo 'Pipeline failed. Check the logs.'
+            echo 'Deployment failed! Check the logs.'
         }
     }
 }
