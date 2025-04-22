@@ -1,0 +1,32 @@
+
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Add SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
+    - name: Deploy via SSH
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          docker rm -f cicd-app || true
+          docker rmi cicd-aws-project || true
+          git clone https://github.com/${{ github.repository }}.git || true
+          cd cicd-aws-project
+          docker build -t cicd-aws-project .
+          docker run -d -p 80:80 --name cicd-app cicd-aws-project
+        EOF
